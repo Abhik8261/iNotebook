@@ -15,7 +15,7 @@ const  getNotes=async ()=>{
     method: 'GET', 
     headers: {
       'Content-Type': 'application/json',
-      'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjMxMDRjMzM2OTViNDM4OGNmZDkxNjU2In0sImlhdCI6MTY2MjAxMjQ2N30.qmPlU0iVXCowuspueK0pGU_JycuIPz3EnM07rnAWi0c'
+      'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjMxYzdhZjlmNWM5ZDFkYmJkMjZiYTI5In0sImlhdCI6MTY2MjgyNTQ4NX0.n1eYAixQiutSUxX7gUwcgWr5hvb7raZgdPeuoyeC0CM'
       
     },
    
@@ -31,7 +31,7 @@ const  addNote=async (title,description,tag)=>{
     method: 'POST', 
     headers: {
       'Content-Type': 'application/json',
-      'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjMxMDRjMzM2OTViNDM4OGNmZDkxNjU2In0sImlhdCI6MTY2MjAxMjQ2N30.qmPlU0iVXCowuspueK0pGU_JycuIPz3EnM07rnAWi0c'
+      'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjMxYzdhZjlmNWM5ZDFkYmJkMjZiYTI5In0sImlhdCI6MTY2MjgyNTQ4NX0.n1eYAixQiutSUxX7gUwcgWr5hvb7raZgdPeuoyeC0CM'
       
     },
     body: JSON.stringify({title,description,tag}) 
@@ -57,7 +57,7 @@ const  addNote=async (title,description,tag)=>{
         method: 'DELETE', 
         headers: {
           'Content-Type': 'application/json',
-          'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjMxMDRjMzM2OTViNDM4OGNmZDkxNjU2In0sImlhdCI6MTY2MjAxMjQ2N30.qmPlU0iVXCowuspueK0pGU_JycuIPz3EnM07rnAWi0c'
+          'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjMxYzdhZjlmNWM5ZDFkYmJkMjZiYTI5In0sImlhdCI6MTY2MjgyNTQ4NX0.n1eYAixQiutSUxX7gUwcgWr5hvb7raZgdPeuoyeC0CM'
           
         }
         
@@ -78,14 +78,14 @@ const  addNote=async (title,description,tag)=>{
       method: 'PUT', 
       headers: {
         'Content-Type': 'application/json',
-        'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjMxMDRjMzM2OTViNDM4OGNmZDkxNjU2In0sImlhdCI6MTY2MjAxMjQ2N30.qmPlU0iVXCowuspueK0pGU_JycuIPz3EnM07rnAWi0c'
+        'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjMxYzdhZjlmNWM5ZDFkYmJkMjZiYTI5In0sImlhdCI6MTY2MjgyNTQ4NX0.n1eYAixQiutSUxX7gUwcgWr5hvb7raZgdPeuoyeC0CM'
         
         // eslint-disable-next-line
       },
       body: JSON.stringify(title,description,tag) 
     });
      const json= await response.json();
-    
+    console.log(json)
 
   let newNotes=JSON.parse(JSON.stringify(notes))
     //logic to edit in client
