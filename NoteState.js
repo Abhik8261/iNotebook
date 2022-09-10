@@ -2,52 +2,111 @@ import React from "react";
 import NoteContext from "./noteContext";
 import { useState } from "react";
 const NoteState=(props)=>{
-const notesInitial =[
-    {
-      "_id": "6319cd4012a286663b735f7f",
-      "user": "63104c33695b4388cfd91656",
-      "title": "My title",
-      "description": "please wake up early in the morninig",
-      "tag": "personal",
-      "date": "2022-09-08T11:08:48.546Z",
-      "__v": 0
-    },
-    {
-      "_id": "6319cd4012a286663b735f7f",
-      "user": "63104c33695b4388cfd91656",
-      "title": "My title",
-      "description": "please wake up early in the morninig",
-      "tag": "personal",
-      "date": "2022-09-08T11:08:48.546Z",
-      "__v": 0
-    },
-    {
-      "_id": "6319cd4012a286663b735f7f",
-      "user": "63104c33695b4388cfd91656",
-      "title": "My title",
-      "description": "please wake up early in the morninig",
-      "tag": "personal",
-      "date": "2022-09-08T11:08:48.546Z",
-      "__v": 0
-    },
-    {
-      "_id": "6319cd4012a286663b735f7f",
-      "user": "63104c33695b4388cfd91656",
-      "title": "My title",
-      "description": "please wake up early in the morninig",
-      "tag": "personal",
-      "date": "2022-09-08T11:08:48.546Z",
-      "__v": 0
-    },
-  ]
+  const host="http://localhost:5000"
+const notesInitial =[]
+
+
+
   const [notes, setNotes] = useState(notesInitial)
 
+  //get all notes
+const  getNotes=async ()=>{
+  const response = await fetch(`${host}/api/notes/fetchallnotes`, {
+    method: 'GET', 
+    headers: {
+      'Content-Type': 'application/json',
+      'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjMxMDRjMzM2OTViNDM4OGNmZDkxNjU2In0sImlhdCI6MTY2MjAxMjQ2N30.qmPlU0iVXCowuspueK0pGU_JycuIPz3EnM07rnAWi0c'
+      
+    },
+   
+  });
+  const  json=await response.json()
+
+ setNotes(json);
+}
+  //Add a note
+const  addNote=async (title,description,tag)=>{
+
+  const response = await fetch(`${host}/api/notes/addnote`, {
+    method: 'POST', 
+    headers: {
+      'Content-Type': 'application/json',
+      'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjMxMDRjMzM2OTViNDM4OGNmZDkxNjU2In0sImlhdCI6MTY2MjAxMjQ2N30.qmPlU0iVXCowuspueK0pGU_JycuIPz3EnM07rnAWi0c'
+      
+    },
+    body: JSON.stringify({title,description,tag}) 
+  });
+  const note=await response.json();
+  setNotes(notes.concat(note))
+ 
+
+ 
+  
+}
+
+
+  //Delte the note
+  
+  
+  const deleteNote=async (id)=>{
+
+   
+      //Api call
+      
+      const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+        method: 'DELETE', 
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjMxMDRjMzM2OTViNDM4OGNmZDkxNjU2In0sImlhdCI6MTY2MjAxMjQ2N30.qmPlU0iVXCowuspueK0pGU_JycuIPz3EnM07rnAWi0c'
+          
+        }
+        
+      });
+      const json=await response.json();
+      
+
+   const  newNotes=notes.filter((note)=>{return(note._id!==id)})
+    setNotes( newNotes)
+}
+
+
+  //Edit the note
+  const editNote=async(id,title,description,tag)=>{
+    //Api call
+    
+    const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
+      method: 'PUT', 
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjMxMDRjMzM2OTViNDM4OGNmZDkxNjU2In0sImlhdCI6MTY2MjAxMjQ2N30.qmPlU0iVXCowuspueK0pGU_JycuIPz3EnM07rnAWi0c'
+        
+        // eslint-disable-next-line
+      },
+      body: JSON.stringify(title,description,tag) 
+    });
+     const json= await response.json();
+    
+
+  let newNotes=JSON.parse(JSON.stringify(notes))
+    //logic to edit in client
+    for(let index=0;index<newNotes.length;index++){
+      const element=newNotes[index];
+      if(element._id===id){
+        newNotes[index].title=title;
+        newNotes[index].description=description;
+        newNotes[index].tag=tag;
+        break;
+      }
+    }
+setNotes(newNotes)
+}
+
 return (
-    <NoteContext.Provider value={{notes,setNotes}}>
+    <NoteContext.Provider value={{notes,addNote,deleteNote,editNote,getNotes}}>
         {props.children}
     </NoteContext.Provider>
 )
-}
 
+}
 
 export default NoteState;
